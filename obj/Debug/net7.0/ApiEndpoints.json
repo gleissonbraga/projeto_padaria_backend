@@ -24,5 +24,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.UsuarioController",
+    "Method": "AtualizarUsuario",
+    "RelativePath": "api/usuarios/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioDTO",
+        "Type": "backend.Controllers.DTO.UsuarioDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

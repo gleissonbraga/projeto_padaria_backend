@@ -47,7 +47,30 @@ namespace backend.Controllers
             }
             catch (ErroHttp ex)
             {
-                return BadRequest(ex.Messages);
+                return BadRequest(ex.Errors);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult AtualizarUsuario([FromBody] UsuarioDTO usuarioDTO, [FromRoute] int id)
+        {
+            try
+            {
+                var usuario = new Usuario
+                {
+                    Nome = usuarioDTO.Nome,
+                    Email = usuarioDTO.Email,
+                    Senha = usuarioDTO.Senha,
+                    Admin = usuarioDTO.Admin,
+                };
+
+                _service.Atualizar(usuario, id);
+
+                return Ok(usuario);
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
             }
         }
     }

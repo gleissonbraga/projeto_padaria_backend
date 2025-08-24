@@ -7,7 +7,7 @@ namespace backend.Interfaces
         List<Usuario> ObterTodosUsuarios();
         Usuario ObterUsuarioPorId(int id);
         void Adicionar(Usuario usuario);
-        void Atualizar(Usuario usuario);
+        void Atualizar(Usuario usuario, int id);
         void Deletar(int id);
     }
 }
