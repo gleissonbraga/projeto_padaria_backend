@@ -19,7 +19,23 @@
     "Parameters": [
       {
         "Name": "usuarioDTO",
-        "Type": "backend.Controllers.DTO.UsuarioDTO",
+        "Type": "backend.Controllers.DTO.usuario.UsuarioRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.UsuarioController",
+    "Method": "ObterUsuarioPorId",
+    "RelativePath": "api/usuarios/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -35,9 +51,25 @@
     "Parameters": [
       {
         "Name": "usuarioDTO",
-        "Type": "backend.Controllers.DTO.UsuarioDTO",
+        "Type": "backend.Controllers.DTO.usuario.UsuarioRequestDTO",
         "IsRequired": true
       },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.UsuarioController",
+    "Method": "Deletar",
+    "RelativePath": "api/usuarios/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
         "Name": "id",
         "Type": "System.Int32",

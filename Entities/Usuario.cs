@@ -18,7 +18,7 @@ namespace backend.Entities
         public string Email { get; set; }
 
         [Required]
-        [StringLength(60)]
+        [StringLength(70)]
         public string Senha { get; set; }
 
         [Required]

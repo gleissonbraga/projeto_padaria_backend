@@ -24,17 +24,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             }
           }
@@ -47,6 +47,28 @@
       }
     },
     "/api/usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Usuario"
@@ -67,21 +89,43 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
+                "$ref": "#/components/schemas/UsuarioRequestDTO"
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -92,7 +136,7 @@
   },
   "components": {
     "schemas": {
-      "UsuarioDTO": {
+      "UsuarioRequestDTO": {
         "type": "object",
         "properties": {
           "nome": {

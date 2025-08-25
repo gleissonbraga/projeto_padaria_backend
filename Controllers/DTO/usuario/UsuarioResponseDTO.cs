@@ -1,11 +1,10 @@
-﻿namespace backend.Controllers.DTO
+﻿namespace backend.Controllers.DTO.ususario
 {
-    public class UsuarioDTO
+    public class UsuarioResponseDTO
     {
-
+        public int IdUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public string Senha { get; set; }
         public short Admin {  get; set; }
     }
 }

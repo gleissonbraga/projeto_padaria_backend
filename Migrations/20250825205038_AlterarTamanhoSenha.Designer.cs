@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Config.db;
@@ -11,9 +12,11 @@ using backend.Config.db;
 namespace backend.Migrations
 {
     [DbContext(typeof(Conexao))]
-    partial class ConexaoModelSnapshot : ModelSnapshot
+    [Migration("20250825205038_AlterarTamanhoSenha")]
+    partial class AlterarTamanhoSenha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
