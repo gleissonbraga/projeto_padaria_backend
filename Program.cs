@@ -14,6 +14,7 @@ builder.Services.AddDbContext<Conexao>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
 
 builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<ProdutoService>();
 
 var app = builder.Build();
 

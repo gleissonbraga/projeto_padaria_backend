@@ -14,9 +14,9 @@ namespace backend.Entities
         public string? Nome { get; set; }
 
         [Required]
-        public decimal Preco {  get; set; }
+        public decimal? Preco {  get; set; }
 
-        public long Quantidade { get; set; }
+        public long? Quantidade { get; set; }
 
         [StringLength(70)]
         public string? Imagem { get; set; }

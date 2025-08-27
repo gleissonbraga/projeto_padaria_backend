@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using backend.Controllers.DTO.produto;
+using backend.Entities;
+using backend.Errors;
+using backend.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
@@ -9,6 +11,12 @@ namespace backend.Controllers
     public class ProdutoController : ControllerBase
     {
 
+        private readonly ProdutoService _service;
+        public ProdutoController(ProdutoService service)
+        {
+            _service = service;
+        }
+
         // GET api/<ProdutoController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -16,10 +24,36 @@ namespace backend.Controllers
             return "value";
         }
 
-        // POST api/<ProdutoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET - api/produtos
+        [HttpGet]
+        public IActionResult ObterTodosProdutos()
         {
+            var produtos = _service.ObterTodosProdutos();
+
+            return Ok(produtos);
+        }
+
+        // POST - api/produtos
+        [HttpPost]
+        public IActionResult Adcionar([FromBody] ProdutoDTO produtoDTO)
+        {
+            try
+            {
+                var produto = new Produto
+                {
+                    Nome = produtoDTO.Nome,
+                    Preco = produtoDTO.Preco,
+                    Quantidade = produtoDTO.Quantidade,
+                    Imagem = produtoDTO.Imagem
+                };
+
+                _service.Adicionar(produto);
+                return Created($"/produtos/{produto.IdProduto}", produto);
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
         }
 
         // PUT api/<ProdutoController>/5

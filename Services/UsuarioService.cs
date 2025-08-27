@@ -2,8 +2,6 @@
 using backend.Entities;
 using backend.Errors;
 using backend.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
 using System.Security.Cryptography;
 
 namespace backend.Services
@@ -39,6 +37,7 @@ namespace backend.Services
 
             var hashSenha = HashSenha(usuario.Senha);
             usuario.Senha = hashSenha;
+            usuario.DateNow = DateTime.UtcNow;
 
             _Conexao.Usuarios.Add(usuario);
             _Conexao.SaveChanges();
