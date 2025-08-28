@@ -45,3 +45,5 @@ C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\n
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\System.CodeDom.dll
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\obj\Debug\net7.0\backend.sourcelink.json
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\DotNetEnv.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Sprache.dll
