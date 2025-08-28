@@ -27,7 +27,7 @@
   },
   {
     "ContainingType": "backend.Controllers.ProdutoController",
-    "Method": "Get",
+    "Method": "ObterPodutoPorId",
     "RelativePath": "api/produtos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -39,21 +39,11 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "backend.Controllers.ProdutoController",
-    "Method": "Put",
+    "Method": "AtualizarProduto",
     "RelativePath": "api/produtos/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -65,22 +55,16 @@
         "IsRequired": true
       },
       {
-        "Name": "value",
-        "Type": "System.String",
+        "Name": "produtoDTO",
+        "Type": "backend.Controllers.DTO.produto.ProdutoDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "backend.Controllers.ProdutoController",
-    "Method": "Delete",
+    "Method": "Deletar",
     "RelativePath": "api/produtos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -92,13 +76,27 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.ProdutoController",
+    "Method": "ObterTodosProdutosInativos",
+    "RelativePath": "api/produtos/inativos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.ProdutoController",
+    "Method": "ObterTodosProdutosAtivos",
+    "RelativePath": "api/produtos/inativos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "backend.Controllers.UsuarioController",
@@ -177,6 +175,26 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.UsuarioController",
+    "Method": "ObterTodosUsuariosAtivos",
+    "RelativePath": "api/usuarios/ativos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.UsuarioController",
+    "Method": "ObterTodosUsuariosInativos",
+    "RelativePath": "api/usuarios/inativos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

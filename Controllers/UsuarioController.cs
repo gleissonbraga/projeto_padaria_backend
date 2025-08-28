@@ -3,6 +3,7 @@ using backend.Controllers.DTO.usuario;
 using backend.Controllers.DTO.usuario;
 using backend.Controllers.DTO.ususario;
 using backend.Entities;
+using backend.Enums;
 using backend.Errors;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,50 @@ namespace backend.Controllers
                     IdUsuario = usuario.IdUsuario,
                     Nome = usuario.Nome,
                     Email = usuario.Email,
-                    Admin = usuario.Admin
+                    Admin = usuario.Admin,
+                    Status = usuario.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString()
+                });
+            }
+
+            return Ok(lstUsuarioDTO);
+        }
+
+        [HttpGet("inativos")]
+        public IActionResult ObterTodosUsuariosInativos()
+        {
+            var usuarios = _service.ObterTodosUsuariosInativos();
+            List<UsuarioResponseDTO> lstUsuarioDTO = new List<UsuarioResponseDTO>();
+
+            foreach (var usuario in usuarios)
+            {
+                lstUsuarioDTO.Add(new UsuarioResponseDTO
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Nome = usuario.Nome,
+                    Email = usuario.Email,
+                    Admin = usuario.Admin,
+                    Status = usuario.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString()
+                });
+            }
+
+            return Ok(lstUsuarioDTO);
+        }
+
+        [HttpGet("ativos")]
+        public IActionResult ObterTodosUsuariosAtivos()
+        {
+            var usuarios = _service.ObterTodosUsuariosAtivos();
+            List<UsuarioResponseDTO> lstUsuarioDTO = new List<UsuarioResponseDTO>();
+
+            foreach (var usuario in usuarios)
+            {
+                lstUsuarioDTO.Add(new UsuarioResponseDTO
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Nome = usuario.Nome,
+                    Email = usuario.Email,
+                    Admin = usuario.Admin,
+                    Status = usuario.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString()
                 });
             }
 
@@ -106,15 +150,18 @@ namespace backend.Controllers
                     Email = usuarioDTO.Email,
                     Senha = usuarioDTO.Senha,
                     Admin = usuarioDTO.Admin,
+                    Status = usuarioDTO.Status == Status.ATIVO.ToString() ? (short)Status.ATIVO : (short)Status.INATIVO,
                 };
 
-                _service.Atualizar(usuario, id);
+                var user = _service.Atualizar(usuario, id);
 
                 var usuarioResponse = new UsuarioResponseDTO
                 {
-                    Nome = usuarioDTO.Nome,
-                    Email = usuarioDTO.Email,
-                    Admin = usuarioDTO.Admin,
+                    IdUsuario = user.IdUsuario,
+                    Nome = user.Nome,
+                    Email = user.Email,
+                    Admin = user.Admin,
+                    Status = user.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString(),
                 };
 
 

@@ -7,7 +7,7 @@ namespace backend.Interfaces
     public interface InterfaceProduto
     {
         List<Produto> ObterTodosProdutos();
-        Produto ObterUsuarioPorId(int id);
+        Produto ObterProdutoPorId(int id);
         void Adicionar(Produto produto);
         void Atualizar(Produto produto, int id);
         void Deletar(int id);

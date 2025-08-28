@@ -21,6 +21,9 @@ namespace backend.Entities
         [StringLength(70)]
         public string? Imagem { get; set; }
 
+        [Column(TypeName = "smallint")]
+        public short Status { get; set; }
+
         [Column(TypeName = "timestamptz")]
         public DateTimeOffset DateNow { get; set; }
     }

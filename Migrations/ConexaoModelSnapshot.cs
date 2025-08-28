@@ -22,6 +22,41 @@ namespace backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("backend.Entities.Produto", b =>
+                {
+                    b.Property<int>("IdProduto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdProduto"));
+
+                    b.Property<DateTimeOffset>("DateNow")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Imagem")
+                        .HasMaxLength(70)
+                        .HasColumnType("character varying(70)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<decimal?>("Preco")
+                        .IsRequired()
+                        .HasColumnType("numeric");
+
+                    b.Property<long?>("Quantidade")
+                        .HasColumnType("bigint");
+
+                    b.Property<short>("Status")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("IdProduto");
+
+                    b.ToTable("Produtos");
+                });
+
             modelBuilder.Entity("backend.Entities.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
@@ -51,6 +86,9 @@ namespace backend.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("character varying(70)");
 
+                    b.Property<short>("Status")
+                        .HasColumnType("smallint");
+
                     b.HasKey("IdUsuario");
 
                     b.ToTable("Usuarios");
@@ -60,10 +98,11 @@ namespace backend.Migrations
                         {
                             IdUsuario = 1,
                             Admin = (short)1,
-                            DateNow = new DateTime(2025, 8, 25, 20, 50, 37, 900, DateTimeKind.Utc).AddTicks(1691),
+                            DateNow = new DateTime(2025, 8, 28, 20, 44, 49, 153, DateTimeKind.Utc).AddTicks(3113),
                             Email = "admin@admin.com",
                             Nome = "Administrador",
-                            Senha = "admin"
+                            Senha = "admin",
+                            Status = (short)0
                         });
                 });
 #pragma warning restore 612, 618

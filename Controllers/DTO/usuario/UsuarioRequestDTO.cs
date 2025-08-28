@@ -6,5 +6,6 @@
         public string Email { get; set; }
         public string Senha { get; set; }
         public short Admin {  get; set; }
+        public string Status { get; set; }
     }
 }

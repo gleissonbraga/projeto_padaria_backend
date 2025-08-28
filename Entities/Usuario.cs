@@ -25,6 +25,9 @@ namespace backend.Entities
         [Column(TypeName = "smallint")]
         public short Admin { get; set; }
 
+        [Column(TypeName = "smallint")]
+        public short Status { get; set; }
+
         public DateTime DateNow { get; set; }
     }
 }

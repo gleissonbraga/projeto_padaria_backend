@@ -7,5 +7,6 @@
         public decimal? Preco { get; set; }
         public long? Quantidade { get; set; }
         public string? Imagem { get; set; }
+        public string? Status { get; set; }
     }
 }
