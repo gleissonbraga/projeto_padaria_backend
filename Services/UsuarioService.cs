@@ -1,9 +1,8 @@
 ﻿using backend.Config.db;
 using backend.Entities;
+using backend.Enums;
 using backend.Errors;
 using backend.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
 using System.Security.Cryptography;
 
 namespace backend.Services
@@ -39,13 +38,15 @@ namespace backend.Services
 
             var hashSenha = HashSenha(usuario.Senha);
             usuario.Senha = hashSenha;
+            usuario.DateNow = DateTime.UtcNow;
+            usuario.Status = (short)Status.ATIVO;
 
             _Conexao.Usuarios.Add(usuario);
             _Conexao.SaveChanges();
         }
 
         // Atualiza o usuário no banco de dados
-        public void Atualizar(Usuario usuario, int id)
+        public Usuario Atualizar(Usuario usuario, int id)
         {
             if (string.IsNullOrEmpty(usuario.Nome))
                 errors.Add(new ErrorDetalhe("O nome não pode ser vazio"));
@@ -73,9 +74,12 @@ namespace backend.Services
             findUser.Email = usuario.Email;
             findUser.Senha = hashSenha;
             findUser.Admin = usuario.Admin;
+            findUser.Status = usuario.Status;
 
             _Conexao.Usuarios.Update(findUser);
             _Conexao.SaveChanges();
+
+            return findUser;
         }
 
         // Exclui o usuário do banco de dados
@@ -101,6 +105,20 @@ namespace backend.Services
         public List<Usuario> ObterTodosUsuarios()
         {
             var query = _Conexao.Usuarios.ToList();
+
+            return query;
+        }
+
+        public List<Usuario> ObterTodosUsuariosInativos()
+        {
+            var query = _Conexao.Usuarios.Where(u => u.Status == (short)Status.INATIVO).ToList();
+
+            return query;
+        }
+
+        public List<Usuario> ObterTodosUsuariosAtivos()
+        {
+            var query = _Conexao.Usuarios.Where(u => u.Status == (short)Status.ATIVO).ToList();
 
             return query;
         }

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using backend.Controllers.DTO.produto;
+using backend.Entities;
+using backend.Enums;
+using backend.Errors;
+using backend.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
@@ -9,29 +12,115 @@ namespace backend.Controllers
     public class ProdutoController : ControllerBase
     {
 
-        // GET api/<ProdutoController>/5
+        private readonly ProdutoService _service;
+        public ProdutoController(ProdutoService service)
+        {
+            _service = service;
+        }
+
+        // GET api/produtos/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult ObterPodutoPorId([FromRoute] int id)
         {
-            return "value";
+            try
+            {
+                var produto = _service.ObterProdutoPorId(id);
+                return Ok(produto);
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
         }
 
-        // POST api/<ProdutoController>
+        // GET - api/produtos
+        [HttpGet]
+        public IActionResult ObterTodosProdutos()
+        {
+            var produtos = _service.ObterTodosProdutos();
+
+            return Ok(produtos);
+        }
+
+        // GET - api/produtos/inativos
+        [HttpGet("inativos")]
+        public IActionResult ObterTodosProdutosInativos()
+        {
+            var produtos = _service.ObterTodosProdutosInativos();
+
+            return Ok(produtos);
+        }
+
+        // GET - api/produtos/ativos
+        [HttpGet("inativos")]
+        public IActionResult ObterTodosProdutosAtivos()
+        {
+            var produtos = _service.ObterTodosProdutosAtivos();
+
+            return Ok(produtos);
+        }
+
+        // POST - api/produtos
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Adcionar([FromBody] ProdutoDTO produtoDTO)
         {
+            try
+            {
+                var produto = new Produto
+                {
+                    Nome = produtoDTO.Nome,
+                    Preco = produtoDTO.Preco,
+                    Quantidade = produtoDTO.Quantidade,
+                    Imagem = produtoDTO.Imagem,
+                };
+
+                _service.Adicionar(produto);
+                return Created($"/produtos/{produto.IdProduto}", produto);
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
         }
 
-        // PUT api/<ProdutoController>/5
+        // PUT api/produtos/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult AtualizarProduto([FromRoute] int id, [FromBody] ProdutoDTO produtoDTO)
         {
+            try
+            {
+                var produto = new Produto
+                {
+                    Nome = produtoDTO.Nome,
+                    Preco = produtoDTO.Preco,
+                    Quantidade = produtoDTO.Quantidade,
+                    Status = produtoDTO.Status == Status.ATIVO.ToString() ? (short)Status.ATIVO : (short)Status.INATIVO,
+                    Imagem = produtoDTO.Imagem
+                };
+
+                _service.Atualizar(produto, id);
+
+                return Ok(produto);
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
         }
 
-        // DELETE api/<ProdutoController>/5
+        // DELETE api/produtos/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Deletar([FromRoute] int id)
         {
+            try
+            {
+                _service.Deletar(id);
+                return Ok();
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
         }
     }
 }
