@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "backend.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "backend.Controllers.DTO.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "backend.Controllers.ProdutoController",
     "Method": "ObterTodosProdutos",
     "RelativePath": "api/produtos",

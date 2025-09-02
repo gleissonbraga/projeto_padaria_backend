@@ -2,7 +2,7 @@
 
 namespace backend.Interfaces
 {
-    public interface InterfaceUsuario
+    public interface IUsuario
     {
         List<Usuario> ObterTodosUsuarios();
         Usuario ObterUsuarioPorId(int id);

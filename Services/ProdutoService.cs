@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace backend.Services
 {
-    public class ProdutoService : InterfaceProduto
+    public class ProdutoService : IProduto
     {
 
         private readonly Conexao _Conexao;

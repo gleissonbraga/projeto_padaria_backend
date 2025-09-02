@@ -44,6 +44,16 @@ C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\n
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\System.CodeDom.dll
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\obj\Debug\net7.0\backend.sourcelink.json
-C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\DotNetEnv.dll
 C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Sprache.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.Bcl.TimeProvider.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Gleisson\Desktop\Projects\fullstack\padaria\backend\backend\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt

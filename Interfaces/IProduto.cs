@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Interfaces
 {
-    public interface InterfaceProduto
+    public interface IProduto
     {
         List<Produto> ObterTodosProdutos();
         Produto ObterProdutoPorId(int id);
