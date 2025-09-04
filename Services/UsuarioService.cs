@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace backend.Services
 {
-    public class UsuarioService : InterfaceUsuario
+    public class UsuarioService : IUsuario
     {
         // Faz a conexão com o banco de dados e o Entity Framework
         private readonly Conexao _Conexao;
@@ -158,6 +158,29 @@ namespace backend.Services
             Array.Copy(hash, 0, hashBytes, 16, 32);
 
             return Convert.ToBase64String(hashBytes);
+        }
+
+        public static bool VerificaSenha(string senhaDigitada, string senhaHashBanco)
+        {
+            // Converte a senha armazenada (hash + salt) de Base64 para bytes
+            byte[] hashBytes = Convert.FromBase64String(senhaHashBanco);
+
+            // Extrai o salt (primeiros 16 bytes)
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            // Gera o hash com o salt extraído
+            var pbkdf2 = new Rfc2898DeriveBytes(senhaDigitada, salt, 100000, HashAlgorithmName.SHA256);
+            byte[] hash = pbkdf2.GetBytes(32);
+
+            // Compara byte a byte
+            for (int i = 0; i < 32; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            }
+
+            return true;
         }
     }
 }

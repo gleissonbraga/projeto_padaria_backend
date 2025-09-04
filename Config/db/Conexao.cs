@@ -7,8 +7,10 @@ namespace backend.Config.db
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Pedido> ProdutoPedido { get; set; }
 
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>().HasData(
             new Usuario
@@ -19,12 +21,25 @@ namespace backend.Config.db
                 Senha = "admin",
                 Admin = 1,
                 DateNow = DateTime.UtcNow
-           });
+            });
+
+            modelBuilder.Entity<ProdutoPedido>()
+       .HasKey(pp => new { pp.CodigoPedido, pp.CodigoProduto });
+
+            modelBuilder.Entity<ProdutoPedido>()
+                .HasOne(pp => pp.Pedido)
+                .WithMany(p => p.ProdutosPedido)
+                .HasForeignKey(pp => pp.CodigoPedido);
+
+            modelBuilder.Entity<ProdutoPedido>()
+                .HasOne(pp => pp.Produto)
+                .WithMany(p => p.ProdutosPedido)
+                .HasForeignKey(pp => pp.CodigoProduto);
         }
 
         public Conexao(DbContextOptions<Conexao> options) : base(options)
-    {
-    }
+        {
+        }
 
-}
+    }
 }

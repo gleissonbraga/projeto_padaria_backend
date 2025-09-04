@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Config.db;
@@ -11,9 +12,11 @@ using backend.Config.db;
 namespace backend.Migrations
 {
     [DbContext(typeof(Conexao))]
-    partial class ConexaoModelSnapshot : ModelSnapshot
+    [Migration("20250902213842_TabelaPedido")]
+    partial class TabelaPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +74,7 @@ namespace backend.Migrations
 
                     b.HasKey("CodigoPedido");
 
-                    b.ToTable("Pedido");
+                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("backend.Entities.Produto", b =>
@@ -107,34 +110,6 @@ namespace backend.Migrations
                     b.HasKey("IdProduto");
 
                     b.ToTable("Produtos");
-                });
-
-            modelBuilder.Entity("backend.Entities.ProdutoPedido", b =>
-                {
-                    b.Property<int>("CodigoPedido")
-                        .HasColumnType("integer")
-                        .HasColumnName("COD_PEDIDO");
-
-                    b.Property<int>("CodigoProduto")
-                        .HasColumnType("integer")
-                        .HasColumnName("COD_PRODUTO");
-
-                    b.Property<int>("CodigoProdutoPedido")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("COD_PROD_PEDIDO");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CodigoProdutoPedido"));
-
-                    b.Property<int>("QuantidadeProduto")
-                        .HasColumnType("integer")
-                        .HasColumnName("QTD_PRODUTO");
-
-                    b.HasKey("CodigoPedido", "CodigoProduto");
-
-                    b.HasIndex("CodigoProduto");
-
-                    b.ToTable("ProdutoPedido");
                 });
 
             modelBuilder.Entity("backend.Entities.Usuario", b =>
@@ -178,41 +153,12 @@ namespace backend.Migrations
                         {
                             IdUsuario = 1,
                             Admin = (short)1,
-                            DateNow = new DateTime(2025, 9, 2, 23, 19, 50, 139, DateTimeKind.Utc).AddTicks(6730),
+                            DateNow = new DateTime(2025, 9, 2, 21, 38, 42, 189, DateTimeKind.Utc).AddTicks(7110),
                             Email = "admin@admin.com",
                             Nome = "Administrador",
                             Senha = "admin",
                             Status = (short)0
                         });
-                });
-
-            modelBuilder.Entity("backend.Entities.ProdutoPedido", b =>
-                {
-                    b.HasOne("backend.Entities.Pedido", "Pedido")
-                        .WithMany("ProdutosPedido")
-                        .HasForeignKey("CodigoPedido")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Entities.Produto", "Produto")
-                        .WithMany("ProdutosPedido")
-                        .HasForeignKey("CodigoProduto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pedido");
-
-                    b.Navigation("Produto");
-                });
-
-            modelBuilder.Entity("backend.Entities.Pedido", b =>
-                {
-                    b.Navigation("ProdutosPedido");
-                });
-
-            modelBuilder.Entity("backend.Entities.Produto", b =>
-                {
-                    b.Navigation("ProdutosPedido");
                 });
 #pragma warning restore 612, 618
         }

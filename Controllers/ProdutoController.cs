@@ -52,7 +52,7 @@ namespace backend.Controllers
         }
 
         // GET - api/produtos/ativos
-        [HttpGet("inativos")]
+        [HttpGet("ativos")]
         public IActionResult ObterTodosProdutosAtivos()
         {
             var produtos = _service.ObterTodosProdutosAtivos();
