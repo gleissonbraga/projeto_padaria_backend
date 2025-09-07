@@ -71,6 +71,15 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback par
 var app = builder.Build();
 app.Urls.Add($"http://0.0.0.0:{port}");
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<Conexao>();
+    db.Database.Migrate();
+}
+
+// Habilitar página de erro detalhada (apenas para teste)
+app.UseDeveloperExceptionPage();
+
 
 #region SWAGGER
 
