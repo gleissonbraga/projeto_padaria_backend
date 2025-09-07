@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 #region Conection Banco
-Env.Load();
+Env.Load("../.env");
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
@@ -72,11 +72,13 @@ var app = builder.Build();
 
 app.Urls.Add($"http://0.0.0.0:{port}");
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<Conexao>();
-    db.Database.Migrate();
-}
+#region creating tables in render
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<Conexao>();
+//    db.Database.Migrate();
+//}
+#endregion
 
 // Habilitar página de erro detalhada (apenas para teste)
 app.UseDeveloperExceptionPage();
