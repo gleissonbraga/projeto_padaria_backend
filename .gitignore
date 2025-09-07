@@ -12,7 +12,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-obj/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -482,5 +482,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-o b j /  
- 
