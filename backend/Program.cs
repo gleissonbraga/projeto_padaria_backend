@@ -1,14 +1,11 @@
 using backend.Config.db;
 using backend.Services;
 using DotNetEnv;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
 
 #region Conection Banco
-Env.Load();
+Env.Load("../.env");
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
@@ -69,20 +66,35 @@ builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<LoginService>();
 #endregion
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback para teste local
+
 var app = builder.Build();
 
+app.Urls.Add($"http://0.0.0.0:{port}");
+
+#region creating tables in render
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<Conexao>();
+//    db.Database.Migrate();
+//}
+#endregion
+
+// Habilitar página de erro detalhada (apenas para teste)
+app.UseDeveloperExceptionPage();
+
+
 #region SWAGGER
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 #endregion
 
 app.UseCors("AllowFrontend");
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseHttpsRedirection();
+//app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

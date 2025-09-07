@@ -5,17 +5,16 @@
 
 # dotenv files
 .env
-
+# /backend/Migrations
 # User-specific files
 *.rsuser
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
-obj/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
 # Mono auto generated files
 mono_crash.*
 
@@ -482,5 +481,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-o b j /  
- 

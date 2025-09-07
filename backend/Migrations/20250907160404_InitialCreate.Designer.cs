@@ -12,8 +12,8 @@ using backend.Config.db;
 namespace backend.Migrations
 {
     [DbContext(typeof(Conexao))]
-    [Migration("20250902231950_TabelaProdutoPedidosEManyToMany")]
-    partial class TabelaProdutoPedidosEManyToMany
+    [Migration("20250907160404_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,7 +181,7 @@ namespace backend.Migrations
                         {
                             IdUsuario = 1,
                             Admin = (short)1,
-                            DateNow = new DateTime(2025, 9, 2, 23, 19, 50, 139, DateTimeKind.Utc).AddTicks(6730),
+                            DateNow = new DateTime(2025, 9, 7, 16, 4, 4, 789, DateTimeKind.Utc).AddTicks(5343),
                             Email = "admin@admin.com",
                             Nome = "Administrador",
                             Senha = "admin",
