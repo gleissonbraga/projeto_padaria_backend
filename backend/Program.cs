@@ -1,11 +1,8 @@
 using backend.Config.db;
 using backend.Services;
 using DotNetEnv;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
 
 #region Conection Banco
 Env.Load();
@@ -70,19 +67,21 @@ builder.Services.AddScoped<LoginService>();
 #endregion
 
 var app = builder.Build();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // padrão 5000
+app.Urls.Add($"http://*:{port}");
+
 
 #region SWAGGER
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 #endregion
 
 app.UseCors("AllowFrontend");
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseHttpsRedirection();
+//app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

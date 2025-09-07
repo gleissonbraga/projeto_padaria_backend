@@ -1,0 +1,17 @@
+﻿version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend_app
+    environment:
+      DB_HOST: dpg-d2uog2ffte5s73bcqbl0-a.oregon-postgres.render.com
+      DB_PORT: 5432
+      DB_USER: admin
+      DB_PASS: N2S7nJNk8q1ir2lGPj4X2NDtKYrrC9dF
+      DB_NAME: padaria_td5z
+      JWT_SECRET: ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES
+    ports:
+      - "9000:9000"
