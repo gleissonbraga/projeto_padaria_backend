@@ -1,7 +1,10 @@
 using backend.Config.db;
 using backend.Services;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 #region Conection Banco
@@ -30,27 +33,27 @@ builder.Services.AddCors(options =>
 #endregion
 
 #region JWT
-//var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
-//var key = Encoding.UTF8.GetBytes(secretKey);
+var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
+var key = Encoding.UTF8.GetBytes(secretKey);
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.RequireHttpsMetadata = false;
-//    options.SaveToken = true;
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = false,
-//        ValidateAudience = false,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        IssuerSigningKey = new SymmetricSecurityKey(key)
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
 #endregion
 
 #region config service
@@ -94,7 +97,7 @@ app.UseSwaggerUI();
 app.UseCors("AllowFrontend");
 
 //app.UseHttpsRedirection();
-//app.UseAuthorization();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
