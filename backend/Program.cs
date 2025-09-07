@@ -69,6 +69,7 @@ builder.Services.AddScoped<LoginService>();
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback para teste local
 
 var app = builder.Build();
+
 app.Urls.Add($"http://0.0.0.0:{port}");
 
 using (var scope = app.Services.CreateScope())
