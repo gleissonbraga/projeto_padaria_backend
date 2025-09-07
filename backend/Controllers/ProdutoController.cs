@@ -3,6 +3,7 @@ using backend.Entities;
 using backend.Enums;
 using backend.Errors;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -20,6 +21,7 @@ namespace backend.Controllers
 
         // GET api/produtos/5
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult ObterPodutoPorId([FromRoute] int id)
         {
             try
