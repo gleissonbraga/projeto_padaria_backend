@@ -5,7 +5,6 @@
 
 # dotenv files
 .env
-/backennd/Migrations
 
 # User-specific files
 *.rsuser
