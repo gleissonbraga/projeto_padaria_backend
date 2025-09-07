@@ -66,9 +66,10 @@ builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<LoginService>();
 #endregion
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback para teste local
+
 var app = builder.Build();
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // padrão 5000
-app.Urls.Add($"http://*:{port}");
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 
 #region SWAGGER
