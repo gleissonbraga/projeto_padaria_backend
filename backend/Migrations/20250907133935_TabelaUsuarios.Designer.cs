@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Config.db;
@@ -11,9 +12,11 @@ using backend.Config.db;
 namespace backend.Migrations
 {
     [DbContext(typeof(Conexao))]
-    partial class ConexaoModelSnapshot : ModelSnapshot
+    [Migration("20250907133935_TabelaUsuarios")]
+    partial class TabelaUsuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,7 +181,7 @@ namespace backend.Migrations
                         {
                             IdUsuario = 1,
                             Admin = (short)1,
-                            DateNow = new DateTime(2025, 9, 2, 23, 19, 50, 139, DateTimeKind.Utc).AddTicks(6730),
+                            DateNow = new DateTime(2025, 9, 7, 13, 39, 35, 670, DateTimeKind.Utc).AddTicks(6288),
                             Email = "admin@admin.com",
                             Nome = "Administrador",
                             Senha = "admin",
