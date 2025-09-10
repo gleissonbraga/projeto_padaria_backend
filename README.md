@@ -53,7 +53,8 @@ Com os arquivos de ambiente criados, você pode iniciar todos os serviços (o ba
 
 Bash
 
-docker-compose up -d --build
+docker-compose up -d
+
 docker-compose up: Inicia os contêineres definidos no arquivo docker-compose.yml.
 
 -d: Roda os contêineres em detached mode (em segundo plano).
