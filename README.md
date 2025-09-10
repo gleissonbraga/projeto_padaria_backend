@@ -45,11 +45,11 @@ Atenção: Os dados abaixo são apenas um modelo. Seus colegas devem preencher c
 
 Bash
 
-DB_HOST= # Host do banco de dados (o nome do serviço no Docker)
-DB_PORT= # Porta para conexão com o banco de dados
-DB_NAME= # Nome do banco de dados
-DB_USER= # Nome de usuário do banco de dados
-DB_PASS= # Senha do usuário do banco de dados
+DB_HOST= # Host do banco de dados (o nome do serviço no Docker)<br>
+DB_PORT= # Porta para conexão com o banco de dados<br>
+DB_NAME= # Nome do banco de dados<br>
+DB_USER= # Nome de usuário do banco de dados<br>
+DB_PASS= # Senha do usuário do banco de dados<br>
 
 JWT_SECRET=ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES # Chave secreta para a autenticação JWT
 ## 4. Iniciando o Projeto
