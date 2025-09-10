@@ -23,7 +23,7 @@ Primeiro, clone o repositório do projeto para sua máquina local. Abra o termin
 git clone <URL_DO_SEU_REPOSITORIO>
 
 ## 3. Configurando as Variáveis de Ambiente
-O projeto utiliza o Docker Compose para orquestrar os serviços. Você precisará criar dois arquivos de ambiente (.env) para configurar o banco de dados e outras variáveis.
+O projeto utiliza o Docker Compose para orquestrar os serviços. Você precisará criar dois arquivos de ambiente (.env) para configurar o banco de dados e outras variáveis e inserir na raiz do projeto.
 
 ## <p>a) container-postgres.env</p>
 Crie um arquivo chamado container-postgres.env na raiz do projeto e adicione o seguinte conteúdo:
@@ -38,8 +38,6 @@ ________________________________________________________________________________
 
 ## <p>b) postgres.env</p>
 Em seguida, crie um arquivo chamado postgres.env na mesma pasta. Este arquivo conterá as variáveis de conexão que o backend usará para se conectar ao banco de dados.
-
-Atenção: Os dados abaixo são apenas um modelo. Seus colegas devem preencher com as informações corretas que foram fornecidas, mas mantendo a estrutura.
 
 DB_HOST= # Host do banco de dados (o nome do serviço no Docker)<br>
 DB_PORT= # Porta para conexão com o banco de dados<br>
@@ -67,6 +65,9 @@ Depois de rodar o comando, o projeto estará ativo e acessível na porta configu
 ## 5. Parando o Projeto
 Para parar os contêineres e remover as redes, execute:
 
-Bash
-
 docker-compose down
+
+## 6. Após todo processo você consegue acessar o pgadmin no browser.
+URL: http://localhost:PORTA(7070)
+INSIRA EMAIL E SENHA
+Crie um database com nome (padaria)
