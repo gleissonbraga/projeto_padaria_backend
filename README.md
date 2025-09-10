@@ -25,7 +25,7 @@ git clone <URL_DO_SEU_REPOSITORIO>
 ## 3. Configurando as Variáveis de Ambiente
 O projeto utiliza o Docker Compose para orquestrar os serviços. Você precisará criar dois arquivos de ambiente (.env) para configurar o banco de dados e outras variáveis.
 
-## a) <h2>container-postgres.env</h2>
+## a) <p>container-postgres.env</p>
 Crie um arquivo chamado container-postgres.env na raiz do projeto e adicione o seguinte conteúdo:
 
 POSTGRES_USER= # Nome de usuário do PostgreSQL<br>
@@ -36,7 +36,7 @@ PGADMIN_DEFAULT_EMAIL= # E-mail de login para o pgAdmin
 PGADMIN_DEFAULT_PASSWORD= # Senha de login para o pgAdmin
 ____________________________________________________________________________________________________
 
-## b) <h2>postgres.env</h2>
+## b) <p>postgres.env</p>
 Em seguida, crie um arquivo chamado postgres.env na mesma pasta. Este arquivo conterá as variáveis de conexão que o backend usará para se conectar ao banco de dados.
 
 Atenção: Os dados abaixo são apenas um modelo. Seus colegas devem preencher com as informações corretas que foram fornecidas, mas mantendo a estrutura.
