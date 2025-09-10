@@ -30,12 +30,12 @@ Crie um arquivo chamado container-postgres.env na raiz do projeto e adicione o s
 
 Bash
 
-POSTGRES_USER=admin     # Nome de usuário do PostgreSQL
-POSTGRES_PASSWORD=admin # Senha do PostgreSQL
-POSTGRES_DB=padaria     # Nome do banco de dados
+POSTGRES_USER= # Nome de usuário do PostgreSQL
+POSTGRES_PASSWORD= # Senha do PostgreSQL
+POSTGRES_DB= # Nome do banco de dados
 
-PGADMIN_DEFAULT_EMAIL=admin@admin.com # E-mail de login para o pgAdmin
-PGADMIN_DEFAULT_PASSWORD=admin        # Senha de login para o pgAdmin
+PGADMIN_DEFAULT_EMAIL= # E-mail de login para o pgAdmin
+PGADMIN_DEFAULT_PASSWORD= # Senha de login para o pgAdmin
 
 JWT_SECRET=ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES # Chave secreta para a autenticação JWT
 b) postgres.env
@@ -45,11 +45,11 @@ Atenção: Os dados abaixo são apenas um modelo. Seus colegas devem preencher c
 
 Bash
 
-DB_HOST=localhost                       # Host do banco de dados (o nome do serviço no Docker)
-DB_PORT=6060                            # Porta para conexão com o banco de dados
-DB_NAME=padaria                         # Nome do banco de dados
-DB_USER=admin                           # Nome de usuário do banco de dados
-DB_PASS=admin                           # Senha do usuário do banco de dados
+DB_HOST= # Host do banco de dados (o nome do serviço no Docker)
+DB_PORT= # Porta para conexão com o banco de dados
+DB_NAME= # Nome do banco de dados
+DB_USER= # Nome de usuário do banco de dados
+DB_PASS= # Senha do usuário do banco de dados
 
 JWT_SECRET=ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES # Chave secreta para a autenticação JWT
 ## 4. Iniciando o Projeto
