@@ -68,6 +68,6 @@ Para parar os contêineres e remover as redes, execute:
 docker-compose down
 
 ## 6. Após todo processo você consegue acessar o pgadmin no browser.
-URL: http://localhost:PORTA(7070)
-INSIRA EMAIL E SENHA
-Crie um database com nome (padaria)
+URL: http://localhost:PORTA(7070)<br>
+INSIRA EMAIL E SENHA<br>
+Crie um database com nome (padaria)<br>
