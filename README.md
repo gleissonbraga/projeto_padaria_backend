@@ -25,25 +25,21 @@ git clone <URL_DO_SEU_REPOSITORIO>
 ## 3. Configurando as Variáveis de Ambiente
 O projeto utiliza o Docker Compose para orquestrar os serviços. Você precisará criar dois arquivos de ambiente (.env) para configurar o banco de dados e outras variáveis.
 
-a) container-postgres.env
+## a) <h2>container-postgres.env</h2>
 Crie um arquivo chamado container-postgres.env na raiz do projeto e adicione o seguinte conteúdo:
 
-Bash
-
-POSTGRES_USER= # Nome de usuário do PostgreSQL
-POSTGRES_PASSWORD= # Senha do PostgreSQL
-POSTGRES_DB= # Nome do banco de dados
+POSTGRES_USER= # Nome de usuário do PostgreSQL<br>
+POSTGRES_PASSWORD= # Senha do PostgreSQL<br>
+POSTGRES_DB= # Nome do banco de dados<br>
 
 PGADMIN_DEFAULT_EMAIL= # E-mail de login para o pgAdmin
 PGADMIN_DEFAULT_PASSWORD= # Senha de login para o pgAdmin
+____________________________________________________________________________________________________
 
-JWT_SECRET=ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES # Chave secreta para a autenticação JWT
-b) postgres.env
+## b) <h2>postgres.env</h2>
 Em seguida, crie um arquivo chamado postgres.env na mesma pasta. Este arquivo conterá as variáveis de conexão que o backend usará para se conectar ao banco de dados.
 
 Atenção: Os dados abaixo são apenas um modelo. Seus colegas devem preencher com as informações corretas que foram fornecidas, mas mantendo a estrutura.
-
-Bash
 
 DB_HOST= # Host do banco de dados (o nome do serviço no Docker)<br>
 DB_PORT= # Porta para conexão com o banco de dados<br>
@@ -52,6 +48,8 @@ DB_USER= # Nome de usuário do banco de dados<br>
 DB_PASS= # Senha do usuário do banco de dados<br>
 
 JWT_SECRET=ACHAVEMAISDOIDADODESENVOLVEMTODOO32BYTES # Chave secreta para a autenticação JWT
+____________________________________________________________________________________________________
+
 ## 4. Iniciando o Projeto
 Com os arquivos de ambiente criados, você pode iniciar todos os serviços (o backend e o banco de dados) usando o Docker Compose. Execute o seguinte comando na raiz do projeto:
 
