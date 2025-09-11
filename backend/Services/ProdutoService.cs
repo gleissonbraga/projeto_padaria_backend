@@ -10,7 +10,6 @@ namespace backend.Services
 {
     public class ProdutoService : IProduto
     {
-
         private readonly Conexao _Conexao;
         public List<ErrorDetalhe> errors = new List<ErrorDetalhe>();
         public ProdutoService(Conexao _db)
@@ -77,7 +76,7 @@ namespace backend.Services
             findProduto.Preco = produto.Preco;
             findProduto.Quantidade += produto.Quantidade;
             findProduto.Status = produto.Status;
-            
+
             _Conexao.Produtos.Update(findProduto);
             _Conexao.SaveChanges();
         }
@@ -123,7 +122,7 @@ namespace backend.Services
             if (produto == null)
                 errors.Add(new ErrorDetalhe("Produto não encontrado"));
 
-            if(errors.Count > 0) throw new ErroHttp(errors);
+            if (errors.Count > 0) throw new ErroHttp(errors);
 
             return produto;
         }

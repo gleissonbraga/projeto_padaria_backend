@@ -27,6 +27,10 @@ namespace backend.Entities
         [Column(TypeName = "timestamptz")]
         public DateTimeOffset DateNow { get; set; }
 
+        public int CodigoCategoria { get; set; }
+
         public ICollection<ProdutoPedido> ProdutosPedido { get; set; } = new List<ProdutoPedido>();
+
+        public Categoria Categoria { get; set; }
     }
 }

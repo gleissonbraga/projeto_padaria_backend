@@ -8,7 +8,8 @@ namespace backend.Config.db
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<Pedido> ProdutoPedido { get; set; }
+        public DbSet<ProdutoPedido> ProdutoPedido { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,11 @@ namespace backend.Config.db
                 .HasOne(pp => pp.Produto)
                 .WithMany(p => p.ProdutosPedido)
                 .HasForeignKey(pp => pp.CodigoProduto);
+
+            modelBuilder.Entity<Produto>()
+                .HasOne(p => p.Categoria)
+                .WithMany(c => c.Produtos)
+                .HasForeignKey(p => p.CodigoCategoria);
         }
 
         public Conexao(DbContextOptions<Conexao> options) : base(options)

@@ -8,7 +8,7 @@ using System.Text;
 
 
 #region Conection Banco
-Env.Load("../.env");
+Env.Load("../postgres.env");
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
@@ -67,6 +67,7 @@ builder.Services.AddDbContext<Conexao>(options =>
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<CategoriaService>();
 #endregion
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback para teste local

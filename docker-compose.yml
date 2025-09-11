@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: no
+    env_file:
+      - container-postgres.env
+    ports:
+      - "6060:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: no
+    env_file:
+      - container-postgres.env
+    ports:
+      - "7070:80"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
