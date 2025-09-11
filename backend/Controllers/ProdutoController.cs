@@ -74,10 +74,22 @@ namespace backend.Controllers
                     Preco = produtoDTO.Preco,
                     Quantidade = produtoDTO.Quantidade,
                     Imagem = produtoDTO.Imagem,
+                    CodigoCategoria = produtoDTO.Categoria
                 };
 
-                _service.Adicionar(produto);
-                return Created($"/produtos/{produto.IdProduto}", produto);
+                var produtoCriado = _service.Adicionar(produto);
+
+                return Created($"/produtos/{produto.IdProduto}", new 
+                {
+                    produtoCriado.IdProduto,
+                    produtoCriado.Nome,
+                    produtoCriado.Preco,
+                    produtoCriado.Quantidade,
+                    produtoCriado.Imagem,
+                    produtoCriado.Categoria.CodigoCategoria,
+                    produtoCriado.Categoria.NomeCategoria
+
+                });
             }
             catch (ErroHttp ex)
             {
@@ -100,9 +112,18 @@ namespace backend.Controllers
                     Imagem = produtoDTO.Imagem
                 };
 
-                _service.Atualizar(produto, id);
+                var produtoAtualizado = _service.Atualizar(produto, id);
 
-                return Ok(produto);
+                return Ok(new
+                {
+                    produtoAtualizado.IdProduto,
+                    produtoAtualizado.Nome,
+                    produtoAtualizado.Preco,
+                    produtoAtualizado.Quantidade,
+                    produtoAtualizado.Imagem,
+                    produtoAtualizado.Categoria.CodigoCategoria,
+                    produtoAtualizado.Categoria.NomeCategoria
+                });
             }
             catch (ErroHttp ex)
             {

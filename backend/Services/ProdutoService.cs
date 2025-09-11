@@ -17,7 +17,7 @@ namespace backend.Services
             _Conexao = _db;
         }
 
-        public void Adicionar(Produto produto)
+        public Produto Adicionar(Produto produto)
         {
             decimal result;
 
@@ -40,11 +40,16 @@ namespace backend.Services
 
             produto.DateNow = DateTime.UtcNow;
             produto.Status = (short)Status.ATIVO;
+ 
             _Conexao.Produtos.Add(produto);
             _Conexao.SaveChanges();
+
+            _Conexao.Entry(produto).Reference(p => p.Categoria).Load();
+
+            return produto;
         }
 
-        public void Atualizar(Produto produto, int id)
+        public Produto Atualizar(Produto produto, int id)
         {
             decimal result;
 
@@ -76,9 +81,14 @@ namespace backend.Services
             findProduto.Preco = produto.Preco;
             findProduto.Quantidade += produto.Quantidade;
             findProduto.Status = produto.Status;
+            findProduto.Categoria = produto.Categoria;
 
             _Conexao.Produtos.Update(findProduto);
             _Conexao.SaveChanges();
+
+            _Conexao.Entry(findProduto).Reference(p => p.Categoria).Load();
+
+            return findProduto;
         }
 
         public void Deletar(int id)
@@ -111,7 +121,6 @@ namespace backend.Services
         public List<Produto> ObterTodosProdutosAtivos()
         {
             var lsttprodutos = _Conexao.Produtos.Where(p => p.Status == (short)Status.ATIVO).ToList();
-
             return lsttprodutos;
         }
 

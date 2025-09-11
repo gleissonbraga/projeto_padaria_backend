@@ -8,5 +8,6 @@
         public long? Quantidade { get; set; }
         public string? Imagem { get; set; }
         public string? Status { get; set; }
+        public int Categoria { get; set; }
     }
 }

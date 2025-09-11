@@ -8,8 +8,8 @@ namespace backend.Interfaces
     {
         List<Produto> ObterTodosProdutos();
         Produto ObterProdutoPorId(int id);
-        void Adicionar(Produto produto);
-        void Atualizar(Produto produto, int id);
+        Produto Adicionar(Produto produto);
+        Produto Atualizar(Produto produto, int id);
         void Deletar(int id);
     }
 }
