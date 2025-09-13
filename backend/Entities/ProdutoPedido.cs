@@ -20,7 +20,5 @@ namespace backend.Entities
 
         [Column("QTD_PRODUTO")]
         public int QuantidadeProduto { get; set; }
-
-        
     }
 }
