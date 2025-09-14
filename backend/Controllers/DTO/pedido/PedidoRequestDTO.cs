@@ -13,6 +13,12 @@ namespace backend.Controllers.DTO.pedido
         public DateTime? DataPedido { get; set; }
         public decimal? ValorTotal { get; set; }
         public string? Chave { get; set; }
+        public String Status { get; set; }
 
+    }
+
+    public class PedidoConfirmarDTO
+    {
+        public string? Chave { get; set; }
     }
 }

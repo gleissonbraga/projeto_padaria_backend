@@ -66,42 +66,56 @@ namespace backend.Controllers
         //    }
         //}
 
-        //[HttpGet("{id}")]
-        //public IActionResult ObterCategoriaPorId([FromRoute] int id)
-        //{
-        //    try
-        //    {
-        //        var categoriaAtualizada = _Service.ObterCategoriaPorId(id);
+        [HttpGet("{id}")]
+        public IActionResult ObterPedidoPorId([FromRoute] int id)
+        {
+            try
+            {
+                var pedido = _Service.ObterPedidoPorId(id);
 
-        //        return Ok(categoriaAtualizada);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { message = ex.Message });
-        //    }
-        //}
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
-        //[HttpGet()]
-        //public IActionResult ObterTodasCategorias([FromRoute] int id)
-        //{
-        //    var categoriaAtualizada = _Service.ObterTodasCategorias();
+        [HttpGet()]
+        public IActionResult ObterTodosPedidos()
+        {
+            var pedidos = _Service.ObterTodasPedidos();
 
-        //    return Ok(categoriaAtualizada);
-        //}
+            return Ok(pedidos);
+        }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult Deletar([FromRoute] int id)
-        //{
-        //    try
-        //    {
-        //        _Service.Deletar(id);
+        [HttpDelete("{id}")]
+        public IActionResult Deletar([FromRoute] int id)
+        {
+            try
+            {
+                _Service.Deletar(id);
 
-        //        return Ok();
-        //    }
-        //    catch (ErroHttp ex)
-        //    {
-        //        return BadRequest(ex.Errors);
-        //    }
-        //}
+                return Ok();
+            }
+            catch (ErroHttp ex)
+            {
+                return BadRequest(ex.Errors);
+            }
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult ConfirmarEntrega([FromRoute] int id, [FromBody] PedidoConfirmarDTO pedidoDTO)
+        {
+            try
+            {
+                _Service.ConfirmarEntrega(id, pedidoDTO.Chave);
+                return Ok(new {message = "Entrega confirmada" });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
