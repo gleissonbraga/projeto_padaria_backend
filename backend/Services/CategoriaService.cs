@@ -5,7 +5,7 @@ using backend.Interfaces;
 
 namespace backend.Services
 {
-    public class CategoriaService : ICatgoria
+    public class CategoriaService : ICategoria
     {
         private readonly Conexao _Conexao;
         public List<ErrorDetalhe> errors = new List<ErrorDetalhe>();

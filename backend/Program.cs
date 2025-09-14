@@ -68,6 +68,7 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<PedidoService>();
 #endregion
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // fallback para teste local

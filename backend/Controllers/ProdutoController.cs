@@ -74,7 +74,7 @@ namespace backend.Controllers
                     Preco = produtoDTO.Preco,
                     Quantidade = produtoDTO.Quantidade,
                     Imagem = produtoDTO.Imagem,
-                    CodigoCategoria = produtoDTO.Categoria
+                    CodigoCategoria = (int)produtoDTO.Categoria
                 };
 
                 var produtoCriado = _service.Adicionar(produto);

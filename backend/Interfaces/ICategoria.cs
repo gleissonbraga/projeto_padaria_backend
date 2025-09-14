@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Interfaces
 {
-    public interface ICatgoria
+    public interface ICategoria
     {
         List<Categoria> ObterTodasCategorias();
         Categoria ObterCategoriaPorId(int id);
