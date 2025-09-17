@@ -36,9 +36,9 @@ namespace backend.Services
 
                 BackUrls = new PreferenceBackUrlsRequest
                 {
-                    Success = "http://localhost:5000/pagamento/sucesso",
-                    Failure = "http://localhost:5000/pagamento/erro",
-                    Pending = "http://localhost:5000/pagamento/pendente"
+                    Success = "https://padaria-api-sui1.onrender.com/pagamento/sucesso",
+                    Failure = "https://padaria-api-sui1.onrender.com/pagamento/erro",
+                    Pending = "https://padaria-api-sui1.onrender.com/pagamento/pendente"
                 },
                 AutoReturn = "approved"
             };
