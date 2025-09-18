@@ -21,7 +21,7 @@ namespace backend.Controllers
             {
                 var preference = _service.CriarPreferencia(id);
 
-                return Ok(new { URL = preference});
+                return Ok(new { preference });
             }
             catch (Exception ex) 
             {
