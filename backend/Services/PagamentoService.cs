@@ -19,7 +19,7 @@ namespace backend.Services
             MercadoPagoConfig.AccessToken = Environment.GetEnvironmentVariable("ACCESS_TOKEN_MP");
         }
 
-        public async Task<string> CriarPreferencia(int intCodPedido) 
+        public async Task<Preference> CriarPreferencia(int intCodPedido) 
         {
             var pedido = _PedidoService.ObterPedidoPorId(intCodPedido);
             if (pedido == null) throw new Exception("Pedido não encontrado.");
@@ -36,9 +36,9 @@ namespace backend.Services
 
                 BackUrls = new PreferenceBackUrlsRequest
                 {
-                    Success = "http://localhost:5000/pagamento/sucesso",
-                    Failure = "http://localhost:5000/pagamento/erro",
-                    Pending = "http://localhost:5000/pagamento/pendente"
+                    Success = "https://padaria-api-sui1.onrender.com/pagamento/sucesso",
+                    Failure = "https://padaria-api-sui1.onrender.com/pagamento/erro",
+                    Pending = "https://padaria-api-sui1.onrender.com/pagamento/pendente"
                 },
                 AutoReturn = "approved"
             };
@@ -46,7 +46,7 @@ namespace backend.Services
             var client = new PreferenceClient();
             Preference preference = await client.CreateAsync(requestPedido);
 
-            return preference.SandboxInitPoint;
+            return preference;
         }
     }
 }
