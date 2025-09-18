@@ -166,6 +166,7 @@ namespace backend.Services
             {
                 CodigoPedido = p.CodigoPedido,
                 NomePessoa = p.NomePessoa,
+                ValorTotal = p.ValorTotal,
                 Produtos = p.ProdutosPedido.Select(pp => new ProdutoDTO
                 {
                     IdProduto = pp.Produto.IdProduto,
