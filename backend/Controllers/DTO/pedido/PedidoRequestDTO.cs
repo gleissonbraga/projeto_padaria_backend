@@ -8,7 +8,7 @@ namespace backend.Controllers.DTO.pedido
         public string? Contato { get; set; }
         public DateOnly DataRetirada { get; set; }
         public TimeOnly HoraRetirada { get; set; }
-        public List<ProdutoDTO> Produtos { get; set; } = new();
+        public List<ProdutoResponseDTO> Produtos { get; set; } = new();
         public int? CodigoPedido { get; set; }
         public DateTime? DataPedido { get; set; }
         public decimal? ValorTotal { get; set; }

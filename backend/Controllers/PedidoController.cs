@@ -45,9 +45,9 @@ namespace backend.Controllers
                 var pedidoResponse = _Service.Adicionar(pedido, lstProdutos);
                 return Ok(pedidoResponse);
             }
-            catch (ErroHttp ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Errors);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -98,13 +98,13 @@ namespace backend.Controllers
 
                 return Ok();
             }
-            catch (ErroHttp ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Errors);
+                return BadRequest(new { error = ex.Message});
             }
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("confirmar/entrega/{id}")]
         public IActionResult ConfirmarEntrega([FromRoute] int id, [FromBody] PedidoConfirmarDTO pedidoDTO)
         {
             try
@@ -113,6 +113,19 @@ namespace backend.Controllers
                 return Ok(new {message = "Entrega confirmada" });
             }
             catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+        [HttpPatch("confirmar/pagamento/{id}")]
+        public IActionResult ConfirmarPagamento([FromRoute] int id)
+        {
+            try
+            {
+                _Service.ConfirmarPagamento(id);
+                return Ok(new { message = "Pagamento Confirmado" });
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }

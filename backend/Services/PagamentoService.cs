@@ -28,10 +28,11 @@ namespace backend.Services
             {
                 Items = pedido.Produtos.Select(i => new PreferenceItemRequest
                 {
+                    Id = i.IdProduto.ToString(),
                     Title = i.Nome,
                     Quantity = Convert.ToInt32(i.Quantidade),
                     UnitPrice = i.Preco,
-                    CurrencyId = "BRL"
+                    CurrencyId = "BRL",
                 }).ToList(),
 
                 BackUrls = new PreferenceBackUrlsRequest

@@ -13,14 +13,12 @@ namespace backend.Services
 {
     public class PedidoService : IPedido
     {
-
         private readonly Conexao _Conexao;
         public List<ErrorDetalhe> errors = new List<ErrorDetalhe>();
         public PedidoService(Conexao conexao)
         {
             _Conexao = conexao;
         }
-
         public PedidoRequestDTO Adicionar(Pedido pedido, List<Produto> produtos)
         {
             //var dateOnly = new DateTime;
@@ -41,13 +39,10 @@ namespace backend.Services
             {
                 var prod = _Conexao.Produtos.Find(produto.IdProduto);
                 if (prod == null) 
-                    errors.Add(new ErrorDetalhe("Produto não encontrado"));
+                    throw new Exception("Produto não encontrado");
 
-                if(prod.Quantidade < produto.Quantidade)
-                    errors.Add(new ErrorDetalhe($"O produto {prod.Nome} possui somente {prod.Quantidade} em estoque"));
-
-                if (errors.Count > 0)
-                    throw new ErroHttp(errors);
+                if (prod.Quantidade < produto.Quantidade)
+                    throw new Exception($"O produto {prod.Nome} possui somente {prod.Quantidade} em estoque");
 
                 prod.Quantidade -= produto.Quantidade;
 
@@ -73,6 +68,16 @@ namespace backend.Services
             _Conexao.Pedidos.Add(pedido);
             _Conexao.SaveChanges();
 
+            string strStatusPedido = null;
+            if (pedido.Status == (short)Status.PENDENTE)
+                strStatusPedido = Status.PENDENTE.ToString();
+            if (pedido.Status == (short)Status.CONFIRMADO)
+                strStatusPedido = Status.CONFIRMADO.ToString();
+            if (pedido.Status == (short)Status.CANCELADO)
+                strStatusPedido = Status.CANCELADO.ToString();
+            if (pedido.Status == (short)Status.ENTREGUE)
+                strStatusPedido = Status.ENTREGUE.ToString();
+
             var pedidoDTO = new PedidoRequestDTO
             {
                 CodigoPedido = pedido.CodigoPedido,
@@ -83,7 +88,8 @@ namespace backend.Services
                 HoraRetirada = pedido.HoraRetirada,
                 ValorTotal = pedido.ValorTotal,
                 Chave = pedido.Chave,
-                Produtos = pedido.ProdutosPedido.Select(pp => new ProdutoDTO
+                Status = strStatusPedido,
+                Produtos = pedido.ProdutosPedido.Select(pp => new ProdutoResponseDTO
                 {
                     IdProduto = pp.CodigoProduto,
                     Quantidade = pp.QuantidadeProduto,
@@ -94,7 +100,16 @@ namespace backend.Services
 
             return pedidoDTO;
         }
+        public void ConfirmarPagamento(int id)
+        {
+            var findPedido = _Conexao.Pedidos.Find(id);
+            if (findPedido == null)
+                throw new Exception("Pedido não encontrado");
 
+            findPedido.Status = (short)Status.CONFIRMADO;
+            _Conexao.Pedidos.Update(findPedido);
+            _Conexao.SaveChanges();
+        }
         public void ConfirmarEntrega(int id, string chave)
         {
             var findPedido = _Conexao.Pedidos.Find(id);
@@ -114,10 +129,12 @@ namespace backend.Services
             if (findPedido == null)
                 throw new Exception("Pedido não encontrado");
 
+            if(findPedido.Status != (short)Status.PENDENTE)
+                throw new Exception("Não é possivel excluir este pedido");
+
             _Conexao.Pedidos.Remove(findPedido);
             _Conexao.SaveChanges();
         }
-
         public PedidoRequestDTO ObterPedidoPorId(int id)
         {
             var findPedido = _Conexao.Pedidos.Include(p => p.ProdutosPedido).ThenInclude(pp => pp.Produto).FirstOrDefault(p => p.CodigoPedido == id);
@@ -139,13 +156,12 @@ namespace backend.Services
                 CodigoPedido = findPedido.CodigoPedido,
                 NomePessoa = findPedido.NomePessoa,
                 Contato = findPedido.Contato,
-                Chave = findPedido.Chave,
                 DataRetirada = findPedido.DataRetirada,
                 HoraRetirada = findPedido.HoraRetirada,
                 ValorTotal = findPedido.ValorTotal,
                 Status = strStatusPedido,
                 DataPedido = findPedido.DataPedido,
-                Produtos = findPedido.ProdutosPedido.Select(pp => new ProdutoDTO
+                Produtos = findPedido.ProdutosPedido.Select(pp => new ProdutoResponseDTO
                 {
                     IdProduto = pp.Produto.IdProduto,
                     Nome = pp.Produto.Nome,
@@ -157,33 +173,69 @@ namespace backend.Services
 
             return pedidosDTO;
         }
-
         public List<PedidoRequestDTO> ObterTodasPedidos()
         {
             var findpedidos = _Conexao.Pedidos.Include(p => p.ProdutosPedido).ThenInclude(pp => pp.Produto).ToList();
 
-            var pedidosDTO = findpedidos.Select(p => new PedidoRequestDTO
+            //var pedidosDTO = findpedidos.Select(p => new PedidoRequestDTO
+            //{
+            //    CodigoPedido = p.CodigoPedido,
+            //    NomePessoa = p.NomePessoa,
+            //    ValorTotal = p.ValorTotal,
+            //    Produtos = p.ProdutosPedido.Select(pp => new ProdutoDTO
+            //    {
+            //        IdProduto = pp.Produto.IdProduto,
+            //        Nome = pp.Produto.Nome,
+            //        Preco = pp.Produto.Preco,
+            //        Quantidade = pp.QuantidadeProduto
+            //    }).ToList()
+            //}).ToList();
+
+            List<PedidoRequestDTO> lstPedidos = new List<PedidoRequestDTO>();
+
+            foreach(var item in findpedidos)
             {
-                CodigoPedido = p.CodigoPedido,
-                NomePessoa = p.NomePessoa,
-                ValorTotal = p.ValorTotal,
-                Produtos = p.ProdutosPedido.Select(pp => new ProdutoDTO
+                string strStatusPedido = null;
+                if (item.Status == (short)Status.PENDENTE)
+                    strStatusPedido = Status.PENDENTE.ToString();
+                if (item.Status == (short)Status.CONFIRMADO)
+                    strStatusPedido = Status.CONFIRMADO.ToString();
+                if (item.Status == (short)Status.CANCELADO)
+                    strStatusPedido = Status.CANCELADO.ToString();
+                if (item.Status == (short)Status.ENTREGUE)
+                    strStatusPedido = Status.ENTREGUE.ToString();
+
+                var pedidoDTO = new PedidoRequestDTO
                 {
-                    IdProduto = pp.Produto.IdProduto,
-                    Nome = pp.Produto.Nome,
-                    Preco = pp.Produto.Preco,
-                    Quantidade = pp.QuantidadeProduto
-                }).ToList()
-            }).ToList();
+                    CodigoPedido = item.CodigoPedido,
+                    NomePessoa = item.NomePessoa,
+                    Contato = item.Contato,
+                    DataPedido = item.DataPedido,
+                    DataRetirada = item.DataRetirada,
+                    HoraRetirada = item.HoraRetirada,
+                    ValorTotal = item.ValorTotal,
+                    Chave = item.Chave,
+                    Status = strStatusPedido,
+                    Produtos = item.ProdutosPedido.Select(pp => new ProdutoResponseDTO
+                    {
+                        IdProduto = pp.CodigoProduto,
+                        Quantidade = pp.QuantidadeProduto,
+                        Nome = _Conexao.Produtos.Find(pp.CodigoProduto).Nome,
+                        Preco = _Conexao.Produtos.Find(pp.CodigoProduto).Preco,
+                        Imagem = _Conexao.Produtos.Find(pp.CodigoProduto).Imagem,
+                        Categoria = _Conexao.Produtos.Include(p => p.Categoria).FirstOrDefault(p => p.IdProduto == pp.CodigoProduto).Nome.ToString(),
+                    }).ToList()
+                };
 
-            return pedidosDTO;
+                lstPedidos.Add(pedidoDTO);
+            }
+
+            return lstPedidos;
         }
-
         public List<PedidoRequestDTO> ObterTodosProdutosPedido()
         {
             throw new NotImplementedException();
         }
-
         static string GerarChave(int tamanho = 6)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -195,6 +247,5 @@ namespace backend.Services
 
             return new string(chave);
         }
-
     }
 }
