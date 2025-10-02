@@ -1,10 +1,12 @@
 ﻿using backend.Config.db;
+using backend.Controllers.DTO.pedido;
 using backend.Controllers.DTO.produto;
 using backend.Entities;
 using backend.Enums;
 using backend.Errors;
 using backend.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services
 {
@@ -118,10 +120,28 @@ namespace backend.Services
             return lsttprodutos;
         }
 
-        public List<Produto> ObterTodosProdutosAtivos()
+        public List<ProdutoDTO> ObterTodosProdutosAtivos()
         {
-            var lsttprodutos = _Conexao.Produtos.Where(p => p.Status == (short)Status.ATIVO).ToList();
-            return lsttprodutos;
+            var findProdutos = _Conexao.Produtos.Include(p => p.Categoria).ToList();
+
+            List<ProdutoDTO> lstProdutosDTO = new List<ProdutoDTO>();
+
+           foreach(var item in findProdutos)
+            {
+                var produtoDTO = new ProdutoDTO
+                {
+                   IdProduto = item.IdProduto,
+                   Nome = item.Nome,
+                   Preco = item.Preco,
+                   Quantidade = item.Quantidade,
+                   NomeCategoria = item.Categoria.NomeCategoria,
+                   Imagem = item.Imagem
+                };
+
+                lstProdutosDTO.Add(produtoDTO);
+            }
+
+            return lstProdutosDTO;
         }
 
         public Produto ObterProdutoPorId(int id)

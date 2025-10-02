@@ -23,9 +23,24 @@ namespace backend.Controllers
 
                 return Ok(new { preference });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("sucesso/{preferenceId}/{paymentId}")]
+        public async Task<IActionResult> PagamentoAprovado([FromRoute] string preferenceId, [FromRoute] string paymentId)
+        {
+            try
+            {
+                await _service.PagamentoAprovado(preferenceId, paymentId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
             }
         }
 

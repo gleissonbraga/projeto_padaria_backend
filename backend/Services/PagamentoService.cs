@@ -1,9 +1,12 @@
 ﻿using backend.Config.db;
 using backend.Entities;
+using backend.Enums;
+using backend.Interfaces;
 using MercadoPago.Client.Preference;
 using MercadoPago.Config;
 using MercadoPago.Resource.Preference;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace backend.Services
@@ -22,6 +25,8 @@ namespace backend.Services
         public async Task<Preference> CriarPreferencia(int intCodPedido) 
         {
             var pedido = _PedidoService.ObterPedidoPorId(intCodPedido);
+            var pedidoUpdate = _Conexao.Pedidos.Find(intCodPedido);
+
             if (pedido == null) throw new Exception("Pedido não encontrado.");
 
             var requestPedido = new PreferenceRequest
@@ -37,9 +42,9 @@ namespace backend.Services
 
                 BackUrls = new PreferenceBackUrlsRequest
                 {
-                    Success = "https://padaria-api-sui1.onrender.com/pagamento/sucesso",
-                    Failure = "https://padaria-api-sui1.onrender.com/pagamento/erro",
-                    Pending = "https://padaria-api-sui1.onrender.com/pagamento/pendente"
+                    Success = "https://projeto-padaria-frontend.vercel.app/pagamento/sucesso",
+                    Failure = "https://projeto-padaria-frontend.vercel.app/pagamento/erro",
+                    Pending = "https://projeto-padaria-frontend.vercel.app/pagamento/pendente"
                 },
                 AutoReturn = "approved"
             };
@@ -47,7 +52,23 @@ namespace backend.Services
             var client = new PreferenceClient();
             Preference preference = await client.CreateAsync(requestPedido);
 
+            pedidoUpdate.PreferenceId = preference.Id;
+            _Conexao.Pedidos.Update(pedidoUpdate);
+
             return preference;
         }
+
+        public async Task PagamentoAprovado(string strPreferenceId, string strPaymentId)
+        {
+            var pedidoUpdate = await _Conexao.Pedidos.FirstOrDefaultAsync(p => p.PreferenceId == strPreferenceId);
+            if (pedidoUpdate == null) throw new Exception("Pedido não encontrado.");
+
+            pedidoUpdate.PreferenceId = strPreferenceId;
+            pedidoUpdate.PaymentId = strPaymentId;
+            pedidoUpdate.Status = (short)Status.CONFIRMADO;
+
+            _Conexao.Pedidos.Update(pedidoUpdate);
+            _Conexao.SaveChanges();
+        } 
     }
 }

@@ -37,6 +37,17 @@ namespace backend.Entities
         [Column("STATUS", TypeName = "smallint")]
         public short Status { get; set; }
 
+        [Column("PREFERENCE_ID")]
+        [StringLength(50)]
+        public string? PreferenceId { get; set; }
+
+        [Column("PaymentId")]
+        [StringLength(20)]
+        public string? PaymentId { get; set; }
+
+        [Column("MERCHANT_ORDER_ID")]
+        public string? MerchantOrderId { get; set; }
+
         public ICollection<ProdutoPedido> ProdutosPedido { get; set; } = new List<ProdutoPedido>();
     }
 }

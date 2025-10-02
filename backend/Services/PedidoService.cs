@@ -35,20 +35,20 @@ namespace backend.Services
             string geraChave = GerarChave(6);
             decimal decValorTotal = 0;
 
-            foreach (var produto in produtos)
-            {
-                var prod = _Conexao.Produtos.Find(produto.IdProduto);
-                if (prod == null) 
-                    throw new Exception("Produto não encontrado");
+            //foreach (var produto in produtos)
+            //{
+            //    var prod = _Conexao.Produtos.Find(produto.IdProduto);
+            //    if (prod == null) 
+            //        throw new Exception("Produto não encontrado");
 
-                if (prod.Quantidade < produto.Quantidade)
-                    throw new Exception($"O produto {prod.Nome} possui somente {prod.Quantidade} em estoque");
+            //    if (prod.Quantidade < produto.Quantidade)
+            //        throw new Exception($"O produto {prod.Nome} possui somente {prod.Quantidade} em estoque");
 
-                prod.Quantidade -= produto.Quantidade;
+            //    prod.Quantidade -= produto.Quantidade;
 
-                decValorTotal += Convert.ToDecimal(prod.Preco * produto.Quantidade);
-                _Conexao.Produtos.Update(prod);
-            }
+            //    decValorTotal += Convert.ToDecimal(prod.Preco * produto.Quantidade);
+            //    _Conexao.Produtos.Update(prod);
+            //}
 
             DateTime dateNow = DateTime.UtcNow;
             pedido.DataPedido = dateNow;
@@ -161,6 +161,45 @@ namespace backend.Services
                 ValorTotal = findPedido.ValorTotal,
                 Status = strStatusPedido,
                 DataPedido = findPedido.DataPedido,
+                Produtos = findPedido.ProdutosPedido.Select(pp => new ProdutoResponseDTO
+                {
+                    IdProduto = pp.Produto.IdProduto,
+                    Nome = pp.Produto.Nome,
+                    Preco = pp.Produto.Preco,
+                    Quantidade = pp.QuantidadeProduto,
+                    Status = pp.Produto.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString(),
+                }).ToList()
+            };
+
+            return pedidosDTO;
+        }
+        public async Task<PedidoRequestDTO> ObterPedidoPorPreferenceId(string id)
+        {
+            var findPedido = await _Conexao.Pedidos.Include(p => p.ProdutosPedido).ThenInclude(pp => pp.Produto).FirstOrDefaultAsync(p => p.PreferenceId == id);
+            string strStatusPedido = null;
+            if (findPedido == null)
+                throw new Exception("Pedido não encontrado");
+
+            if (findPedido.Status == (short)Status.PENDENTE)
+                strStatusPedido = Status.PENDENTE.ToString();
+            if (findPedido.Status == (short)Status.CONFIRMADO)
+                strStatusPedido = Status.CONFIRMADO.ToString();
+            if (findPedido.Status == (short)Status.CANCELADO)
+                strStatusPedido = Status.CANCELADO.ToString();
+            if (findPedido.Status == (short)Status.ENTREGUE)
+                strStatusPedido = Status.ENTREGUE.ToString();
+
+            var pedidosDTO = new PedidoRequestDTO
+            {
+                CodigoPedido = findPedido.CodigoPedido,
+                NomePessoa = findPedido.NomePessoa,
+                Contato = findPedido.Contato,
+                DataRetirada = findPedido.DataRetirada,
+                HoraRetirada = findPedido.HoraRetirada,
+                ValorTotal = findPedido.ValorTotal,
+                Status = strStatusPedido,
+                DataPedido = findPedido.DataPedido,
+                Chave = findPedido.Chave,
                 Produtos = findPedido.ProdutosPedido.Select(pp => new ProdutoResponseDTO
                 {
                     IdProduto = pp.Produto.IdProduto,

@@ -25,7 +25,7 @@ namespace backend.Controllers
             try
             {
                 List<Produto> lstProdutos = new List<Produto>();
-                foreach (var item in pedidoResquestDTO.Produtos) 
+                foreach (var item in pedidoResquestDTO.Produtos)
                 {
                     lstProdutos.Add(new Produto
                     {
@@ -81,6 +81,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("aprovado/{id}")]
+        public async Task<IActionResult> ObterPedidoPorPreferenceId([FromRoute] string id)
+        {
+            try
+            {
+                var pedido = await _Service.ObterPedidoPorPreferenceId(id);
+
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet()]
         public IActionResult ObterTodosPedidos()
         {
@@ -100,7 +115,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message});
+                return BadRequest(new { error = ex.Message });
             }
         }
 
@@ -110,9 +125,9 @@ namespace backend.Controllers
             try
             {
                 _Service.ConfirmarEntrega(id, pedidoDTO.Chave);
-                return Ok(new {message = "Entrega confirmada" });
+                return Ok(new { message = "Entrega confirmada" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
