@@ -54,6 +54,7 @@ namespace backend.Services
 
             pedidoUpdate.PreferenceId = preference.Id;
             _Conexao.Pedidos.Update(pedidoUpdate);
+            _Conexao.SaveChanges();
 
             return preference;
         }
