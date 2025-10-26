@@ -129,7 +129,7 @@ namespace backend.Services
             if (findPedido == null)
                 throw new Exception("Pedido não encontrado");
 
-            if(findPedido.Status != (short)Status.PENDENTE)
+            if (findPedido.Status != (short)Status.PENDENTE)
                 throw new Exception("Não é possivel excluir este pedido");
 
             _Conexao.Pedidos.Remove(findPedido);
@@ -151,7 +151,7 @@ namespace backend.Services
             if (findPedido.Status == (short)Status.ENTREGUE)
                 strStatusPedido = Status.ENTREGUE.ToString();
 
-            var pedidosDTO =  new PedidoRequestDTO
+            var pedidosDTO = new PedidoRequestDTO
             {
                 CodigoPedido = findPedido.CodigoPedido,
                 NomePessoa = findPedido.NomePessoa,
@@ -232,7 +232,7 @@ namespace backend.Services
 
             List<PedidoRequestDTO> lstPedidos = new List<PedidoRequestDTO>();
 
-            foreach(var item in findpedidos)
+            foreach (var item in findpedidos)
             {
                 string strStatusPedido = null;
                 if (item.Status == (short)Status.PENDENTE)
@@ -257,12 +257,12 @@ namespace backend.Services
                     Status = strStatusPedido,
                     Produtos = item.ProdutosPedido.Select(pp => new ProdutoResponseDTO
                     {
-                        IdProduto = pp.CodigoProduto,
+                        IdProduto = pp.Produto.IdProduto,
                         Quantidade = pp.QuantidadeProduto,
-                        Nome = _Conexao.Produtos.Find(pp.CodigoProduto).Nome,
-                        Preco = _Conexao.Produtos.Find(pp.CodigoProduto).Preco,
-                        Imagem = _Conexao.Produtos.Find(pp.CodigoProduto).Imagem,
-                        Categoria = _Conexao.Produtos.Include(p => p.Categoria).FirstOrDefault(p => p.IdProduto == pp.CodigoProduto).Nome.ToString(),
+                        Nome = pp.Produto.Nome,
+                        Preco = pp.Produto.Preco,
+                        Imagem = pp.Produto.Imagem,
+                        Categoria = pp.Produto.Categoria != null ? pp.Produto.Categoria.NomeCategoria : null
                     }).ToList()
                 };
 
