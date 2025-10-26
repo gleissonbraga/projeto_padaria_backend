@@ -8,7 +8,7 @@ using System.Text;
 
 
 #region Conection Banco
-Env.Load("../postgres.env");
+Env.Load("../render.env");
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
