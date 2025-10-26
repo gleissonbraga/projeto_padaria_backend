@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // URL do seu front-end
+            policy.WithOrigins("http://localhost:3000", "https://projeto-padaria-frontend.vercel.app/") // URL do seu front-end
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
