@@ -35,20 +35,15 @@ namespace backend.Services
             string geraChave = GerarChave(6);
             decimal decValorTotal = 0;
 
-            //foreach (var produto in produtos)
-            //{
-            //    var prod = _Conexao.Produtos.Find(produto.IdProduto);
-            //    if (prod == null) 
-            //        throw new Exception("Produto não encontrado");
+            foreach (var produto in produtos)
+            {
+                var prod = _Conexao.Produtos.Find(produto.IdProduto);
+                if (prod == null)
+                    throw new Exception("Produto não encontrado");
 
-            //    if (prod.Quantidade < produto.Quantidade)
-            //        throw new Exception($"O produto {prod.Nome} possui somente {prod.Quantidade} em estoque");
-
-            //    prod.Quantidade -= produto.Quantidade;
-
-            //    decValorTotal += Convert.ToDecimal(prod.Preco * produto.Quantidade);
-            //    _Conexao.Produtos.Update(prod);
-            //}
+                decValorTotal += Convert.ToDecimal(prod.Preco * produto.Quantidade);
+                _Conexao.Produtos.Update(prod);
+            }
 
             DateTime dateNow = DateTime.UtcNow;
             pedido.DataPedido = dateNow;
