@@ -68,22 +68,21 @@ namespace backend.Services
                 errors.Add(new ErrorDetalhe("O valor inserido é invalido"));
 
             var findProduto = _Conexao.Produtos.Find(id);
+            var findCategoria = _Conexao.Categoria.Find(produto.CodigoCategoria);
             if (findProduto == null) errors.Add(new ErrorDetalhe("Produto não encontrado"));
+
+            if (errors.Count > 0) throw new ErroHttp(errors);
 
             if (string.IsNullOrEmpty(produto.Imagem))
                 produto.Imagem = "image.png";
             else
                 findProduto.Imagem = produto.Imagem;
 
-
-            if (errors.Count > 0) throw new ErroHttp(errors);
-
-
             findProduto.Nome = produto.Nome;
             findProduto.Preco = produto.Preco;
-            findProduto.Quantidade += produto.Quantidade;
+            findProduto.Quantidade = produto.Quantidade;
             findProduto.Status = produto.Status;
-            findProduto.Categoria = produto.Categoria;
+            findProduto.Categoria = findCategoria;
 
             _Conexao.Produtos.Update(findProduto);
             _Conexao.SaveChanges();
@@ -135,7 +134,9 @@ namespace backend.Services
                    Preco = item.Preco,
                    Quantidade = item.Quantidade,
                    NomeCategoria = item.Categoria.NomeCategoria,
-                   Imagem = item.Imagem
+                   Imagem = item.Imagem,
+                   CodigoCategoria = item.CodigoCategoria,
+                   Status = (short)item.Status == (short)Status.ATIVO ? Status.ATIVO.ToString() : Status.INATIVO.ToString(),
                 };
 
                 lstProdutosDTO.Add(produtoDTO);

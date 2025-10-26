@@ -10,5 +10,6 @@
         public string? Status { get; set; }
         public int? Categoria { get; set; }
         public string? NomeCategoria { get; set; }
+        public int? CodigoCategoria { get; set; }
     }
 }
