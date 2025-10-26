@@ -257,12 +257,12 @@ namespace backend.Services
                     Status = strStatusPedido,
                     Produtos = item.ProdutosPedido.Select(pp => new ProdutoResponseDTO
                     {
-                        IdProduto = pp.CodigoProduto,
+                        IdProduto = pp.Produto.IdProduto,
                         Quantidade = pp.QuantidadeProduto,
-                        Nome = _Conexao.Produtos.Find(pp.CodigoProduto).Nome,
-                        Preco = _Conexao.Produtos.Find(pp.CodigoProduto).Preco,
-                        Imagem = _Conexao.Produtos.Find(pp.CodigoProduto).Imagem,
-                        Categoria = _Conexao.Produtos.Include(p => p.Categoria).FirstOrDefault(p => p.IdProduto == pp.CodigoProduto).Nome.ToString(),
+                        Nome = pp.Produto.Nome,
+                        Preco = pp.Produto.Preco,
+                        Imagem = pp.Produto.Imagem,
+                        Categoria = pp.Produto.Categoria != null ? pp.Produto.Categoria.NomeCategoria : null
                     }).ToList()
                 };
 

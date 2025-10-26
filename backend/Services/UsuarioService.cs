@@ -52,8 +52,6 @@ namespace backend.Services
                 errors.Add(new ErrorDetalhe("O nome não pode ser vazio"));
             if (string.IsNullOrEmpty(usuario.Email))
                 errors.Add(new ErrorDetalhe("O email não pode ser vazio"));
-            if (string.IsNullOrEmpty(usuario.Senha))
-                errors.Add(new ErrorDetalhe("A senha não pode ser vazia"));
 
             var vericaEmail = _Conexao.Usuarios.Any(u => u.Email == usuario.Email);
             var findUser = _Conexao.Usuarios.Find(id);
@@ -68,11 +66,17 @@ namespace backend.Services
                 throw new ErroHttp(errors);
             }
 
-            string hashSenha = HashSenha(usuario.Senha);
-            var teste = hashSenha.Length;
+            if (!string.IsNullOrEmpty(usuario.Senha))
+            {
+                string hashSenha = HashSenha(usuario.Senha);
+                var teste = hashSenha.Length;
+                findUser.Senha = hashSenha;
+            }
+                
+
+
             findUser.Nome = usuario.Nome;
             findUser.Email = usuario.Email;
-            findUser.Senha = hashSenha;
             findUser.Admin = usuario.Admin;
             findUser.Status = usuario.Status;
 

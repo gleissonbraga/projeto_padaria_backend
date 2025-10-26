@@ -109,7 +109,8 @@ namespace backend.Controllers
                     Preco = produtoDTO.Preco,
                     Quantidade = produtoDTO.Quantidade,
                     Status = produtoDTO.Status == Status.ATIVO.ToString() ? (short)Status.ATIVO : (short)Status.INATIVO,
-                    Imagem = produtoDTO.Imagem
+                    Imagem = produtoDTO.Imagem,
+                    CodigoCategoria = Convert.ToInt32(produtoDTO.CodigoCategoria)
                 };
 
                 var produtoAtualizado = _service.Atualizar(produto, id);
