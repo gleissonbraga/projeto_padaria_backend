@@ -18,7 +18,7 @@ namespace backend.Entities
 
         public long? Quantidade { get; set; }
 
-        [StringLength(70)]
+        [StringLength(150)]
         public string? Imagem { get; set; }
 
         [Column(TypeName = "smallint")]

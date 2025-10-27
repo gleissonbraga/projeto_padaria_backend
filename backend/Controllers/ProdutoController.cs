@@ -146,5 +146,19 @@ namespace backend.Controllers
                 return BadRequest(ex.Errors);
             }
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromForm] IFormFile file)
+        {
+            try
+            {
+                var imageUrl = await _service.UploadImage(file);
+                return Ok(new { imageUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
     }
 }

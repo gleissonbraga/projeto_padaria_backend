@@ -6,6 +6,7 @@ using backend.Enums;
 using backend.Errors;
 using backend.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services
@@ -13,10 +14,15 @@ namespace backend.Services
     public class ProdutoService : IProduto
     {
         private readonly Conexao _Conexao;
+        private readonly IWebHostEnvironment _environment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public List<ErrorDetalhe> errors = new List<ErrorDetalhe>();
-        public ProdutoService(Conexao _db)
+        public ProdutoService(Conexao _db, IWebHostEnvironment environment,
+            IHttpContextAccessor httpContextAccessor)
         {
             _Conexao = _db;
+            _environment = environment;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Produto Adicionar(Produto produto)
@@ -155,6 +161,35 @@ namespace backend.Services
             if (errors.Count > 0) throw new ErroHttp(errors);
 
             return produto;
+        }
+
+        public async Task<string> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                throw new Exception("Nenhum arquivo enviado.");
+
+            var extensao = Path.GetExtension(file.FileName).ToLower();
+            if (extensao != ".jpg" && extensao != ".jpeg" && extensao != ".png")
+                throw new Exception("Apenas arquivos JPG e PNG são permitidos.");
+
+            var path = Path.Combine(_environment.WebRootPath, "images", "produtos");
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            var fileName = $"{Guid.NewGuid()}{extensao}";
+            var filePath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Pega host atual para montar URL pública
+            var request = _httpContextAccessor.HttpContext?.Request;
+            var imageUrl = $"{request?.Scheme}://{request?.Host}/images/produtos/{fileName}";
+
+            return imageUrl;
         }
     }
 }
